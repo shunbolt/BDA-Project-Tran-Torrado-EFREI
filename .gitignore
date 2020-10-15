@@ -1,1 +1,3 @@
 notebooks/.ipynb_checkpoints/
+data/raw/application_test.csv
+data/raw/application_train.csv
