@@ -1,38 +1,35 @@
-import pandas as pd
-import numpy as np
-from sklearn.utils import resample
+from sklearn.datasets import make_classification
+from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
-import sys
+from sklearn.metrics import accuracy_score, log_loss
 import argparse
+import pandas as pd
+from sklearn.impute import SimpleImputer
+import numpy as np
+from sklearn.metrics import auc, accuracy_score, confusion_matrix, mean_squared_error
+from sklearn.utils import resample
 
-#example of command : python Model_Training_RandomForest.py --nb-estimators 22
-
-
-df_train = pd.read_csv('../../data/processed/processed_application_train.csv')
-df_test = pd.read_csv('../../data/processed/processed_application_test.csv')
+df_train = pd.read_csv('../data/processed/processed_application_train.csv')
+df_test = pd.read_csv('../data/processed/processed_application_test.csv')
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="RandomForestClassifier example")
+    parser = argparse.ArgumentParser(description="XGBoost example")
     parser.add_argument(
-        "--nb-estimators",
+        "--learning-rate",
+        type=float,
+        default=0.3,
+        help="learning rate to update step size at each boosting step (default: 0.3)",
+    )
+    parser.add_argument(
+        "--n-estimators",
         type=int,
         default=10,
-        help="int, default=10, The number of trees in the forest ",
+        help="Number of boosting rounds. (default: 10)",
     )
     return parser.parse_args()
 
-args = parse_args()
-estimators = args.nb_estimators
 
-
-
-
-#estimators = int(sys.argv[1]) if len(sys.argv) > 1 else 10
-
-#print("Hyperparameter: estimators = " + str(estimators))        
-
-#estimators = int(sys.argv[1]) if ((int(sys.argv[1]) > 1) and (int(sys.argv[1]) < 100)) else 10
+args = parse_args() 
 
 # Separate majority and minority classes
 df_majority = df_train[df_train["TARGET"] == 0]
@@ -54,7 +51,6 @@ y = df_downsampled['TARGET']
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
 
-# Feature Scaling
 from sklearn.preprocessing import StandardScaler
 
 sc = StandardScaler()
@@ -74,18 +70,16 @@ imp = imp.fit(X_train)
 
 # Impute impour data, then train
 X_train_imp = imp.transform(X_train)
-clf = RandomForestClassifier(n_estimators=estimators)
-clf = clf.fit(X_train_imp, y_train)
+clf = GradientBoostingClassifier(n_estimators=args.n_estimators,learning_rate=args.learning_rate,random_state=42)
+clf.fit(X_train_imp, y_train)
 
 X_test_imp = imp.transform(X_test)
-y_pred_test = clf.predict(X_test_imp)
+clf_pred = clf.predict(X_test_imp)
 
-print("This is the accuracy score for Random Forest Classifier : ")
-DW_RFC_Accuracy = accuracy_score(y_test, y_pred_test)
-print(accuracy_score(y_test, y_pred_test))
+clf_score = clf.score(X_test_imp, y_test)
 
-from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
+print("This is the accuracy score for Gradient Boosting Classifier : ")
+print(clf_score)
+print("This is the confusion matrix score for Gradient Boosting Classifier : ")
+print(confusion_matrix(y_test, clf_pred))
 
-print("\nThis is the confusion matrix for Random Forest Classifier : ")
-DW_RFC_CM = confusion_matrix(y_test, y_pred_test)
-print(confusion_matrix(y_test, y_pred_test))

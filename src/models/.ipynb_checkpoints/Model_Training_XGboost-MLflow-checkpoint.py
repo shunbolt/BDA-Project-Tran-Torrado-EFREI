@@ -6,6 +6,10 @@ from sklearn.metrics import accuracy_score, log_loss
 import pandas as pd
 import argparse
 from sklearn.utils import resample
+from urllib.parse import urlparse
+
+import mlflow
+import mlflow.xgboost
 
 df_train = pd.read_csv('../../data/processed/processed_application_train.csv')
 df_test = pd.read_csv('../../data/processed/processed_application_test.csv')
@@ -28,7 +32,9 @@ def parse_args():
     return parser.parse_args()
                    
                    
-args = parse_args()   
+args = parse_args()  
+
+mlflow.xgboost.autolog()
 
 # Separate majority and minority classes
 df_majority = df_train[df_train["TARGET"] == 0]
@@ -54,17 +60,35 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 dtrain = xgb.DMatrix(X_train, label=y_train)
 dtest = xgb.DMatrix(X_test, label=y_test)
 
+with mlflow.start_run():
 
+    xgb_model = xgb.XGBClassifier(n_estimators=args.n_estimators,learning_rate=args.learning_rate,random_state=42)
+    xgb_model.fit(X_train, y_train)
+    xgb_pred = xgb_model.predict(X_test)
 
-xgb_model = xgb.XGBClassifier(n_estimators=args.n_estimators,learning_rate=args.learning_rate,random_state=42)
-xgb_model.fit(X_train, y_train)
-xgb_pred = xgb_model.predict(X_test)
+    print("This is the accuracy score for XGBClassifier : ")
+    acc = accuracy_score(y_test, xgb_pred)
+    print(acc)
+    print("This is the confusion matrix score for XGBClassifier : ")
+    print(confusion_matrix(y_test, xgb_pred))
+    
+    mlflow.log_metrics({"accuracy": acc})
+    mlflow.log_param("learning_rate",args.learning_rate)
+    mlflow.log_param("estimators",args.n_estimators)
+    
 
-print("This is the accuracy score for XGBClassifier : ")
-print(accuracy_score(y_test, xgb_pred))
-print("This is the confusion matrix score for XGBClassifier : ")
-print(confusion_matrix(y_test, xgb_pred))
+    tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
 
+    # Model registry does not work with file store
+    if tracking_url_type_store != "file":
+
+        # Register the model
+        # There are other ways to use the Model Registry, which depends on the use case,
+        # please refer to the doc for more information:
+        # https://mlflow.org/docs/latest/model-registry.html#api-workflow
+        mlflow.sklearn.log_model(xgb_model, "model", registered_model_name="ElasticnetWineModel")
+    else:
+        mlflow.sklearn.log_model(xgb_model, "model")    
 
 #params = {
 #            "num_class": 3,
