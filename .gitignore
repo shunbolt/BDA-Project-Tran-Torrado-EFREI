@@ -1,4 +1,5 @@
 notebooks/.ipynb_checkpoints/
 data/raw/application_test.csv
 data/raw/application_train.csv
-src/visualization/visuals
+data/processed/processed_application_test.csv
+data/processed/processed_application_train.csv
