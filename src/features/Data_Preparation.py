@@ -77,8 +77,8 @@ df_test['DAYS_EMPLOYED_ANOM'] = df_test["DAYS_EMPLOYED"] == 365243
 df_train['DAYS_EMPLOYED'].replace({365243: np.nan}, inplace = True)
 df_test['DAYS_EMPLOYED'].replace({365243: np.nan}, inplace = True)
 
-subset_df_train = df_train[["SK_ID_CURR", "DAYS_BIRTH", "EXT_SOURCE_3", "EXT_SOURCE_2", "EXT_SOURCE_1", "TARGET"]]
-subset_df_test = df_test[["SK_ID_CURR", "DAYS_BIRTH", "EXT_SOURCE_3", "EXT_SOURCE_2", "EXT_SOURCE_1"]]
+subset_df_train = df_train[["DAYS_BIRTH", "EXT_SOURCE_3", "EXT_SOURCE_2", "EXT_SOURCE_1", "TARGET"]]
+subset_df_test = df_test[["DAYS_BIRTH", "EXT_SOURCE_3", "EXT_SOURCE_2", "EXT_SOURCE_1"]]
 
 print(subset_df_train)
 print(subset_df_test)

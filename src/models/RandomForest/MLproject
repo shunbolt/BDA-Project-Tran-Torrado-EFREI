@@ -1,0 +1,9 @@
+name: XGboost
+
+conda_env: conda.yaml
+
+entry_points:
+  main:
+    parameters:
+      estimators: {type: int, default: 10}
+    command: "python Model_Training_RandomForest-MLflow.py --nb-estimators {estimators}"

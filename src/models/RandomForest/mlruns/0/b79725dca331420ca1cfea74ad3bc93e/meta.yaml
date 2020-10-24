@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rafa/Desktop/MLFlow/Project/src/models/RandomForest/mlruns/0/b79725dca331420ca1cfea74ad3bc93e/artifacts
+end_time: 1603552853375
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+name: ''
+run_id: b79725dca331420ca1cfea74ad3bc93e
+run_uuid: b79725dca331420ca1cfea74ad3bc93e
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1603552843998
+status: 3
+tags: []
+user_id: rafa

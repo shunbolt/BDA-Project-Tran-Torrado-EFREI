@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rafa/Desktop/MLFlow/Project/src/models/GradientBoosting/mlruns/0/d703fdae92114745a9310649b5031845/artifacts
+end_time: 1603547550245
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+name: ''
+run_id: d703fdae92114745a9310649b5031845
+run_uuid: d703fdae92114745a9310649b5031845
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1603547548217
+status: 3
+tags: []
+user_id: rafa

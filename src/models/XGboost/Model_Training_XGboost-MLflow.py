@@ -1,4 +1,3 @@
-import xgboost as xgb
 from sklearn.metrics import auc, accuracy_score, confusion_matrix, mean_squared_error
 from sklearn import datasets
 from sklearn.model_selection import train_test_split
@@ -9,8 +8,8 @@ from sklearn.utils import resample
 from urllib.parse import urlparse
 
 import mlflow
-import mlflow.xgboost
-
+# import mlflow.xgboost
+import xgboost as xgb
 
 
 if __name__ == "__main__":
