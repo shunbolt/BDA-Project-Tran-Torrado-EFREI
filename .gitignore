@@ -3,5 +3,7 @@ data/raw/application_test.csv
 data/raw/application_train.csv
 data/processed/processed_application_test.csv
 data/processed/processed_application_train.csv
+docs/_build
 src/visualization/visuals
 src/models/mlruns
+src/models/RandomForest/mlruns/

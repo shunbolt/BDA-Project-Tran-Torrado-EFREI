@@ -5,6 +5,6 @@ setup(
     packages=find_packages(),
     version='0.1.0',
     description='Big Data Applications - ML project for EFREI - 2021',
-    author='Rapahaël Tran - Yoann Torrado',
+    author='Raphaël Tran - Yoann Torrado',
     license='',
 )
