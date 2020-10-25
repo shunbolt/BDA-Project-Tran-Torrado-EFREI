@@ -13,11 +13,9 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   introduction
-   exploration
-   feature-engineering
-   model-training
-   model-generation
+   Introduction
+   Scripts
+   MLflow
 
 
 
