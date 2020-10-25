@@ -5,17 +5,17 @@
 
 Big Data Applications project documentation.
 ==============================================
-by Raphaël Tran & Yoann Torrado
-########################
+**by Raphaël Tran & Yoann Torrado**
+
 
 Contents:
 
 .. toctree::
    :maxdepth: 2
 
-   Introduction
-   Scripts
-   MLflow
+   introduction
+   scripts
+   mlflow
 
 
 

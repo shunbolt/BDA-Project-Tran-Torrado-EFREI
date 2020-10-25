@@ -5,8 +5,8 @@
 
 Big Data Applications project documentation.
 ==============================================
-by Raphaël Tran & Yoann Torrado
-########################
+**by Raphaël Tran & Yoann Torrado**
+
 
 Contents:
 
@@ -14,10 +14,8 @@ Contents:
    :maxdepth: 2
 
    introduction
-   exploration
-   feature-engineering
-   model-training
-   model-generation
+   scripts
+   mlflow
 
 
 
