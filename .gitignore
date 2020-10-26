@@ -7,3 +7,5 @@ docs/_build/
 src/visualization/visuals
 src/models/mlruns
 src/models/RandomForest/mlruns/
+src/models/GradientBoosting/mlruns/
+src/models/XGboost/mlruns/

@@ -4,6 +4,7 @@ import numpy as np
 df_train = pd.read_csv("../../data/raw/application_train.csv")
 df_test = pd.read_csv("../../data/raw/application_test.csv")
 
+
 def missing_values_table(df):
         # Total missing values
         mis_val = df.isnull().sum()
@@ -23,25 +24,17 @@ def missing_values_table(df):
             mis_val_table_ren_columns.iloc[:,1] != 0].sort_values(
         '% of Total Values', ascending=False).round(1)
         
-        # Print some summary information
-        #print ("Your selected dataframe has " + str(df.shape[1]) + " columns.\n"      
-        #   "There are " + str(mis_val_table_ren_columns.shape[0]) +
-        #     " columns that have missing values.")
-        
         # Return the dataframe with missing information
-        return mis_val_table_ren_columns
+        return mis_val_table_ren_columns    
     
-    
-# Missing values statistics
+# Missing values statistics train data
 missing_values = missing_values_table(df_train)
 missing_values = missing_values[missing_values["% of Total Values"] > 65]
 to_drop = missing_values
 to_drop = to_drop.transpose()
 df_train = df_train.drop(columns = to_drop)
 
-
-
-# Missing values statistics
+# Missing values statistics test data
 missing_values = missing_values_table(df_test)
 missing_values = missing_values[missing_values["% of Total Values"] > 65]
 to_drop = missing_values
@@ -51,9 +44,6 @@ df_test = df_test.drop(columns = to_drop)
 df_train_encoded = pd.get_dummies(df_train)
 df_test_encoded = pd.get_dummies(df_test)
 
-#print("Training set shape :", df_train_encoded.shape)
-#print("Testing set shape :", df_test_encoded.shape)
-
 train_labels = df_train_encoded['TARGET']
 
 df_train_encoded, df_test_encoded = df_train_encoded.align(df_test_encoded, join = 'inner', axis = 1)
@@ -61,13 +51,8 @@ df_train_encoded, df_test_encoded = df_train_encoded.align(df_test_encoded, join
 # Add the target back in
 df_train_encoded['TARGET'] = train_labels
 
-#print('Training Features shape: ', df_train_encoded.shape)
-#print('Testing Features shape: ', df_test_encoded.shape)
-
-
 df_train = df_train_encoded
 df_test = df_test_encoded
-
 
 # Create an anomalous flag column
 df_train['DAYS_EMPLOYED_ANOM'] = df_train["DAYS_EMPLOYED"] == 365243
@@ -83,6 +68,7 @@ subset_df_test = df_test[["DAYS_BIRTH", "EXT_SOURCE_3", "EXT_SOURCE_2", "EXT_SOU
 print(subset_df_train)
 print(subset_df_test)
 
+#create new csv with processed data
 subset_df_train.to_csv(r'../../data/processed/processed_application_train.csv', index=False)
 subset_df_test.to_csv(r'../../data/processed/processed_application_test.csv',  index=False)
 
